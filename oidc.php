@@ -139,6 +139,58 @@ function oidc_retrieve(OpenIDConnectClient $oidc, $force_registration = false) {
 		}
 	}
 
+	// Groups registration //
+
+	// If the group management setting is enabled, add the user to the configured groups
+	// TODO
+	if (true) {
+
+		// Remove existing groups
+		$query = '
+			DELETE FROM ' . USER_GROUP_TABLE . '
+			WHERE `user_id` = ' . $row['id'] . ';';
+		pwg_query($query);
+
+		// Get the groups array provided by the oidc provider
+		$groups = $oidc->requestUserInfo('piwigo_groups');
+
+		foreach ($groups as $group_name)
+		{
+			// Check if expected group exists
+			$query = '
+				SELECT id FROM `'.GROUPS_TABLE.'`
+				WHERE name = \'' . $group_name . '\'';
+
+			$group_row = pwg_db_fetch_assoc(pwg_query($query));
+
+			// The group does not exist, we need to create it
+			if (empty($group_row['id'])) {
+
+				// creating the group, see line 82 gallery/include/ws_functions/pwg.groups.php
+				single_insert(
+					GROUPS_TABLE,
+					array(
+						'name' => $group_name,
+						'is_default' => boolean_to_string(false),
+					)
+				);
+				$inserted_id = pwg_db_insert_id();
+				
+				$group_id = $inserted_id;
+			} else {
+				// The group exists, we just need its id
+				$group_id = $group_row['id'];
+			}
+
+			// Add the user to the group
+			single_insert(USER_GROUP_TABLE, [
+				'user_id' => $row['id'],
+				'group_id' => $group_id,
+			]);
+		}
+		
+	}
+
 	return $row['id'];
 }
 
