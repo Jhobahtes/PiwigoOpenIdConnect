@@ -142,8 +142,12 @@ function oidc_retrieve(OpenIDConnectClient $oidc, $force_registration = false) {
 	// Groups registration //
 
 	// If the group management setting is enabled, add the user to the configured groups
-	// TODO
-	if (true) {
+	if ($config['manage_groups']) {
+
+		$groups_claim = "groups";
+		if (!empty($config['groups_claim'])) {
+			$groups_claim = $config['groups_claim'];
+		}
 
 		// Remove existing groups
 		$query = '
@@ -152,7 +156,7 @@ function oidc_retrieve(OpenIDConnectClient $oidc, $force_registration = false) {
 		pwg_query($query);
 
 		// Get the groups array provided by the oidc provider
-		$groups = $oidc->requestUserInfo('piwigo_groups');
+		$groups = $oidc->requestUserInfo($groups_claim);
 
 		foreach ($groups as $group_name)
 		{
