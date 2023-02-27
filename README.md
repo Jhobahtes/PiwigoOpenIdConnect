@@ -1,4 +1,5 @@
 # Piwigo OpenID Connect plugin
+
 OpenID Connect is a Piwigo plugin which allows single sign-on logins using the
 OpenID Connect protocol. The protocol utilizes both the OpenID Connect Core and
 the OpenID Connect Discovery specifications. The plugin supports both the
@@ -10,11 +11,13 @@ enabled.
 Special thanks to jumbojett for the OpenID Connect library used in this plugin.
 
 ## License
+
 This project is covered by the Apache 2.0 License, please refer to the LICENSE
 file enclosed.
 
 ## Install
-To install the plugin in a Piwigo installation, please download a release and
+
+To install the plugin in a Piwigo installation, please download the latest [build](https://github.com/aeecleclair/PiwigoOpenIdConnect/actions) and
 unzip it to the /plugins folder within your Piwigo installation. Enable the
 plugin from Piwigo (it should be visible), and configure the plugin through the
 admin. Test that your installation is functional before enabling a flow.
