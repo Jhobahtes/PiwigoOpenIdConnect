@@ -79,6 +79,8 @@ if (isset($_POST['save_config']))
 		'client_secret' => $_POST['client_secret'], 
 		'scope' => $_POST['scope'], 
 		'preferred_username' => $_POST['preferred_username'], 
+		'manage_groups' => $_POST['manage_groups'], 
+		'groups_claim' => $_POST['groups_claim'], 
 		'proxy' => $_POST['proxy'], 
 		'verify_host' => isset($_POST['verify_host']), 
 		'verify_peer' => isset($_POST['verify_peer']), 
