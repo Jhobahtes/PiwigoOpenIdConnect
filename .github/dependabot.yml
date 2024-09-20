@@ -1,0 +1,18 @@
+# Dependabot version updates
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates
+
+version: 2
+updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "composer"
+    directory: "/"
