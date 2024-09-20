@@ -163,7 +163,7 @@ function oidc_retrieve(OpenIDConnectClient $oidc, $force_registration = false) {
 			// Check if expected group exists
 			$query = '
 				SELECT id FROM `'.GROUPS_TABLE.'`
-				WHERE name = \'' . $group_name . '\'';
+				WHERE name = \'' . pwg_db_real_escape_string($group_name) . '\'';
 
 			$group_row = pwg_db_fetch_assoc(pwg_query($query));
 
@@ -174,7 +174,7 @@ function oidc_retrieve(OpenIDConnectClient $oidc, $force_registration = false) {
 				single_insert(
 					GROUPS_TABLE,
 					array(
-						'name' => $group_name,
+						'name' => pwg_db_real_escape_string($group_name),
 						'is_default' => boolean_to_string(false),
 					)
 				);
