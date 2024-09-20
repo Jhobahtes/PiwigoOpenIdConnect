@@ -1,0 +1,31 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Composer install
+        uses: php-actions/composer@v6
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: PiwigoOpenIdConnect
+          path: .
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: .
+          generate_release_notes: true
+          make_latest: true
